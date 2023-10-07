@@ -16,6 +16,11 @@
   }
 
   fetchData(); // Call the function to fetch data when the component is loaded
+
+
+
+
+  
 </script>
 
 <style>
@@ -34,3 +39,5 @@
     <p>Loading data...</p>
   {/if}
 </div>
+
+
