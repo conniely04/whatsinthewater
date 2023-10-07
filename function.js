@@ -34,7 +34,7 @@ function handleMapClick(latLng) {
 }
 
 function displayToxcityData(data) {
-  let html = "<h2>Biological Data</h2>";
+  let html = "<h2>Toxicity Data</h2>";
   html += "<ul>";
   data.value.forEach((item) => {
     html += `<li>${item.parameter.name}: ${item.result.value} ${item.result.unit}</li>`;
