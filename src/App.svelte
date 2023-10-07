@@ -2,6 +2,6 @@
 
 </script>
 
-<div>hello world</div>
+<div>hello</div>
 
 
