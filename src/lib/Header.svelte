@@ -6,15 +6,19 @@
 
 </script>
 
-<main>
+<div class="main">
     <div class="nasa-header">
         Nasa Hackathon
     </div>
     <button on:click={click}>Counts: {num}</button>
-</main>
+</div>
+
 
 
 <style>
+    .main {
+        border: 2px;
+    }
     .nasa-header {
         display: flex;
         justify-content: center;
