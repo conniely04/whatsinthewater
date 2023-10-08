@@ -1,11 +1,5 @@
 <script>
-    import Header from "./lib/Header.svelte";
-    import Map from "./lib/Map.svelte";
+    import Map from "./lib/maps/Map.svelte";
 </script>
 
-
-<Header />
 <Map />
-
-
-
