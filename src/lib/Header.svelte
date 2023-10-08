@@ -1,16 +1,13 @@
 <script>
-    let num = 0
-    function click() {
-        num += 1;
-    }
 
 </script>
 
 <div class="main">
     <div class="nasa-header">
-        Nasa Hackathon
+        <div>
+            <img src="../assets/logo.png" width="300px" height="50px" alt="logo">
+        </div>
     </div>
-    <button on:click={click}>Counts: {num}</button>
 </div>
 
 

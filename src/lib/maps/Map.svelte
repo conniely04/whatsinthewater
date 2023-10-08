@@ -1,5 +1,4 @@
 <script>
-    import { Map } from "mapbox-gl";
     import { mapbox, key } from './mapbox.js'
     import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css"
     import { onMount, onDestroy, setContext } from "svelte";
@@ -16,7 +15,7 @@
 
     lat = 37.3387;
     lon = -121.8853;
-    zoom = 9;
+    zoom = 5;
 
     function updateData() {
         zoom = map.getZoom();
@@ -24,36 +23,58 @@
         lat = map.getCenter().lat;
     }
 
-    onMount(() => {
+    function goTo() {
+        if ("geolocation" in navigator) {
+            // Request the user's current location
+            navigator.geolocation.getCurrentPosition((position) => {
+                lat = position.coords.latitude;
+                lon = position.coords.longitude;
+                console.log(lat)
+                console.log(lon)
+                // Create a marker at the user's location
+                const marker = new mapbox.Marker()
+                    .setLngLat([lon, lat])
+                    .addTo(map);
+                // Zoom the map to the user's location
+                map.flyTo({
+                    center: [lon, lat],
+                    zoom: 12, // Adjust the zoom level as needed
+                    essential: true // This animation is considered essential with regards to prefers-reduced-motion media query
+                });
+            }, (error) => {
+                console.error("Error getting location:", error);
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
 
-        map = new Map({
+    function load() {
+        map = new mapbox.Map({
             container,
-            accessToken: `pk.eyJ1IjoiY29ubmllbHkyMDA0IiwiYSI6ImNsbmdqeWVvZTB6NXoyc2xmZzRqY2RicXoifQ._nLR-VuK8TtSrRdInnWm3w`,
-            style: `mapbox://styles/mapbox/navigation-night-v1`,
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
             center: [lon, lat],
             zoom,
-            projection: 'globe',
+            projection: 'globe'
         });
-        map.on('move', () => {
-            updateData();
-        })
-    });
-
+        map.on('load', () => {
+            map.setFog({});
+        });
+    }
     onDestroy(() => {
         map.remove();
     });
-
-    console.log("hello")
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css">
+    <link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css" on:load={load} />
 </svelte:head>
 
 <div class="map-wrap">
     <div class="sidebar">
         Longitude: {lon.toFixed(4)} | Latitude: {lat.toFixed(4)} | Zoom: {zoom.toFixed(2)}
     </div>
+    <button class="locate-button" on:click={goTo}>Use My Location</button>
     <div class="map" bind:this={container}>
         {#if map}
             <slot />
@@ -87,6 +108,30 @@
         left: 0;
         margin: 12px;
         border-radius: 4px;
+    }
+    button {
+        position: absolute;
+        z-index: 2;
+    }
+    .locate-button {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        background-color: white;
+        border: black;
+        border-radius: 30px;
+        color: black;
+        padding: 6px 12px;
+        text-align: center;
+        font-size: 16px;
+        z-index: 1;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+    }
+
+    .locate-button:active {
+        background-color: black;
+        color: white;
     }
 </style>
 
