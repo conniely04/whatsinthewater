@@ -1,34 +1,39 @@
 <script>
     import { Map } from "mapbox-gl";
-
+    import { mapbox, key } from './mapbox.js'
     import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css"
-    import { onMount, onDestroy } from "svelte";
+    import { onMount, onDestroy, setContext } from "svelte";
+
+    setContext(key, {
+        getMap: () => map
+    });
 
     let map;
-    let mapContainer;
-    let lng, lat, zoom;
+    let container;
+    export let lat;
+    export let lon;
+    export let zoom;
 
     lat = 37.3387;
-    lng = -121.8853;
+    lon = -121.8853;
     zoom = 9;
 
     function updateData() {
         zoom = map.getZoom();
-        lng = map.getCenter().lng;
+        lon = map.getCenter().lng;
         lat = map.getCenter().lat;
     }
 
     onMount(() => {
-        const initialState = { lng: lng, lat: lat, zoom: zoom };
 
         map = new Map({
-            container: mapContainer,
+            container,
             accessToken: `pk.eyJ1IjoiY29ubmllbHkyMDA0IiwiYSI6ImNsbmdqeWVvZTB6NXoyc2xmZzRqY2RicXoifQ._nLR-VuK8TtSrRdInnWm3w`,
-            style: `mapbox://styles/mapbox/outdoors-v11`,
-            center: [initialState.lng, initialState.lat],
-            zoom: initialState.zoom,
+            style: `mapbox://styles/mapbox/navigation-night-v1`,
+            center: [lon, lat],
+            zoom,
+            projection: 'globe',
         });
-
         map.on('move', () => {
             updateData();
         })
@@ -37,6 +42,8 @@
     onDestroy(() => {
         map.remove();
     });
+
+    console.log("hello")
 </script>
 
 <svelte:head>
@@ -45,14 +52,24 @@
 
 <div class="map-wrap">
     <div class="sidebar">
-        Longitude: {lng.toFixed(4)} | Latitude: {lat.toFixed(4)} | Zoom: {zoom.toFixed(2)}
+        Longitude: {lon.toFixed(4)} | Latitude: {lat.toFixed(4)} | Zoom: {zoom.toFixed(2)}
     </div>
-    <div class="map" bind:this={mapContainer} />
+    <div class="map" bind:this={container}>
+        {#if map}
+            <slot />
+        {/if}
+    </div>
 </div>
 
 <style>
+    .map-wrap {
+        border-style: solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
     .map {
-        position: absolute;
         width: 100%;
         height: 100%;
     }
