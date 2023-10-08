@@ -71,6 +71,7 @@
 </svelte:head>
 
 <div class="map-wrap">
+    <img src="src/assets/logo.png" width="300px" height="50px" alt="logo" class="logo">
     <div class="sidebar">
         Longitude: {lon.toFixed(4)} | Latitude: {lat.toFixed(4)} | Zoom: {zoom.toFixed(2)}
     </div>
@@ -85,9 +86,8 @@
 <style>
     .map-wrap {
         position: relative;
-        width: 80%;
-        height: 80vh;
-        border-style: solid;
+        width: 100%;
+        height: 98vh;
         display: flex;
         margin: auto;
         justify-content: center;
@@ -104,7 +104,7 @@
         font-family: monospace;
         z-index: 1;
         position: absolute;
-        top: 0;
+        bottom: 24px;
         left: 0;
         margin: 12px;
         border-radius: 4px;
@@ -132,6 +132,12 @@
     .locate-button:active {
         background-color: black;
         color: white;
+    }
+    .logo {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index:2;
     }
 </style>
 
