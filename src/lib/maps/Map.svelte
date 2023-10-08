@@ -60,10 +60,14 @@
         map.on('load', () => {
             map.setFog({});
         });
+        map.on('move', () => {
+            updateData();
+        })
     }
     onDestroy(() => {
         map.remove();
     });
+
 </script>
 
 <svelte:head>
