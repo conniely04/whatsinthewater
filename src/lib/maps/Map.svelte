@@ -63,11 +63,14 @@
 
 <style>
     .map-wrap {
+        position: relative;
+        width: 80%;
+        height: 80vh;
         border-style: solid;
         display: flex;
+        margin: auto;
         justify-content: center;
         align-items: center;
-        height: 100vh;
     }
     .map {
         width: 100%;
