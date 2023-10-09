@@ -1,5 +1,7 @@
 <script>
     import { mapbox, key } from './mapbox.js'
+    
+
     import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css"
     import { onMount, onDestroy, setContext } from "svelte";
 
@@ -68,7 +70,14 @@
         map.remove();
     });
 
+    
+   
+    
+
+
 </script>
+
+
 
 <svelte:head>
     <link rel="stylesheet" href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css" on:load={load} />
