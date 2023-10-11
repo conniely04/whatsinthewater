@@ -1,5 +1,6 @@
 <script>
     import { mapbox, key } from './mapbox.js'
+    import { firebaseConfig, app, storage, storageRef, logoRef, getDownloadURL } from '../../storage.js'
     
 
     import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css"

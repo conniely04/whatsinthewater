@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-// TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -18,11 +17,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 const storageRef = ref(storage);
-const imagesRef = ref(storage, "images");
+//const imagesRef = ref(storage, "images/logo.png");
+//path to image
 const logoRef = ref(storage, "images/logo.png");
 
-uploadBytes(storageRef, file).then((snapshot) => {
-  console.log("Uploaded a blob or file!");
-});
+//retrieval
+let imageUrl = null;
 
-export { firebaseConfig, app, storage, storageRef, imagesRef, logoRef };
+try {
+  //imageUrl.child(logoRef).getDownloadURL();
+} catch (error) {
+  console.error("Error fetching image:", error);
+}
+
+export { firebaseConfig, app, storage, storageRef, logoRef, getDownloadURL };
+//group everything in a function and then  export only the function
